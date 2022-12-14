@@ -54,12 +54,12 @@ autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 "" More intuitive arrow mappings for wildmenu
 "" https://vi.stackexchange.com/questions/22627/switching-arrow-key-mappings-for-wildmenu-tab-completion
-set wildcharm=<C-Z>
-let open_re = '\(e\%[dit]\|\%[v]new\) '
-cnoremap <expr> <up> getcmdline() =~" open_re && wildmenumode() ? "\<left>" : "\<up>"
-cnoremap <expr> <down> getcmdline() =~" open_re && wildmenumode() ? "\<right>" : "\<down>"
-cnoremap <expr> <left> getcmdline() =~" open_re && wildmenumode() ? "\<up>" : "\<left>"
-cnoremap <expr> <right> getcmdline() =~" open_re && wildmenumode() ? " \<bs>\<C-Z>" : "\<right>"
+"set wildcharm=<C-Z>
+"let open_re = '\(e\%[dit]\|\%[v]new\) '
+"cnoremap <expr> <up> getcmdline() =~" open_re && wildmenumode() ? "\<left>" : "\<up>"
+"cnoremap <expr> <down> getcmdline() =~" open_re && wildmenumode() ? "\<right>" : "\<down>"
+"cnoremap <expr> <left> getcmdline() =~" open_re && wildmenumode() ? "\<up>" : "\<left>"
+"cnoremap <expr> <right> getcmdline() =~" open_re && wildmenumode() ? " \<bs>\<C-Z>" : "\<right>"
 
 "" Clipboard
 "if has('clipboard')
