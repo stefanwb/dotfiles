@@ -1,5 +1,5 @@
-" Path to python3 bin
-"let g:python3_host_prog = '/usr/local/bin/python3'
+"G Path to python3 bin
+let g:python3_host_prog = '/usr/bin/python3'
 
 " Plugins - install vim-plug then load them
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
@@ -10,13 +10,11 @@ endif
 call plug#begin('~/.config/nvim/plugged')
 
 "Plug 'airblade/vim-gitgutter'
-"Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 "Plug 'dense-analysis/ale'
 "Plug 'easymotion/vim-easymotion'
 "Plug 'ekalinin/Dockerfile.vim'
 "Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 "Plug 'godlygeek/tabular'
-Plug 'hashivim/vim-hashicorp-tools'
 "Plug 'mhinz/vim-startify'
 "Plug 'raimondi/delimitmate'
 "Plug 'sirver/ultisnips' | Plug 'honza/vim-snippets'
@@ -25,12 +23,42 @@ Plug 'hashivim/vim-hashicorp-tools'
 "Plug 'tpope/vim-fugitive'
 "Plug 'tpope/vim-repeat'
 "Plug 'tpope/vim-surround'
-"Plug 'valloric/youcompleteme', { 'do': 'python3 ./install.py --go-completer' }
+"Plug 'wellle/tmux-complete.vim'
+"Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'make release'} " TODO find solution
+Plug 'hashivim/vim-hashicorp-tools'
+Plug 'valloric/youcompleteme'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-"Plug 'wellle/tmux-complete.vim'
-
+Plug 'github/copilot.vim'
+Plug 'neovim/nvim-lspconfig'
+"Plug 'CoderCookE/vim-chatgpt'
 call plug#end()
+
+
+" lspconfig
+lua << EOF
+-- Pyright for jump-to-definition
+require('lspconfig').pyright.setup {
+  on_attach = function(client, bufnr)
+    local opts = { noremap=true, silent=true }
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    vim.diagnostic.config({
+      virtual_text = true,
+      signs = true,
+      underline = true,
+    })
+  end,
+}
+
+-- Ruff for linting
+require('lspconfig').ruff.setup {
+  on_attach = function(client, bufnr)
+    local opts = { noremap=true, silent=true }
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+  end,
+}
+EOF
+
 
 "
 " Neovim settings
@@ -48,9 +76,11 @@ set noshowmode                  " We show the current mode with airline
 set showmatch                   " Show matching brackets/parenthesis
 set scrolloff=5                 " Show at least 5 lines above or below the cursor
 syntax enable                   " Enable syntax highlighting
+set cuc                         " Enable vertical column
 
 autocmd FileType json setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+
 
 "" More intuitive arrow mappings for wildmenu
 "" https://vi.stackexchange.com/questions/22627/switching-arrow-key-mappings-for-wildmenu-tab-completion
@@ -81,10 +111,6 @@ set hlsearch                    " Highlight search terms
 set incsearch                   " Find the next match as we type the search
 set ignorecase                  " Ignore case when searching...
 set smartcase                   " ...unless we type a capital
-
-" Mouse
-set mouse=""                     " Automatically enable mouse usage
-set mousehide                   " Hide the mouse cursor while typing
 
 " Formatting
 set nowrap                      " Do not wrap long lines
@@ -136,11 +162,10 @@ let g:terraform_align=1
 let g:terraform_commentstring='//%s'
 let g:terraform_fmt_on_save=1
 
-"" Language server
-"let g:LanguageClient_serverCommands = {
-"    \ 'go' : ['go-langserver', '-gocodecompletion'],
-"    \ }
-"
+let g:LanguageClient_serverCommands = {
+    \ 'terraform': ['terraform-ls', 'serve'],
+    \ }
+
 "if has('conceal')
 "  set conceallevel=2 concealcursor=niv
 "endif
@@ -150,3 +175,17 @@ let g:terraform_fmt_on_save=1
 "let g:UltiSnipsJumpBackwardTrigger = "<S-tab>"
 
 map <F12> <C-w>\|
+"map <BS> :echo 'You pressed backspace!'<CR>
+"map <Del> :echo 'You pressed Delete!'<CR>
+"inoremap <C-Del> x
+
+
+" OpenAI - Github Copilot
+" let g:chat_gpt_key='sk-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+" let g:chat_gpt_max_tokens=2000
+
+colorscheme slate
+
+" Mouse
+set mouse=a                     " Automatically enable mouse usage
+set mousehide                   " Hide the mouse cursor while typing

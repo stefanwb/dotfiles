@@ -1,22 +1,45 @@
-export PATH="$PATH:/opt/homebrew/bin:$HOME/.local/bin:$HOME/go/bin/:$HOME/.tfenv/bin"
-export GIT_EDITOR=vi
+export PATH="$PATH:/opt/homebrew/bin:$HOME/.local/bin:$HOME/go/bin/:$HOME/.tfenv/bin:$HOME/bin"
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+export CXX="/opt/homebrew/opt/llvm/bin/clang++"
+#export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+export GIT_EDITOR=nvim
 export TFENV_ARCH=amd64
+#export PYTHON_CONFIGURE_OPTS="--enable-framework"
 
 alias grc='export BRANCH=$(git branch --show-current) && git fetch origin $BRANCH && git rebase origin/$BRANCH'
-alias grm='git fetch origin master && git rebase origin/master'
+alias grm='export BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed "s@^refs/remotes/origin/@@") &&  git fetch origin ${BRANCH} && git rebase origin/${BRANCH}'
+alias gcm='export BRANCH=$(git remote show origin | grep "HEAD branch" | cut -d" " -f5) && git checkout ${BRANCH} && git pull origin ${BRANCH}'
 alias gw="cd ~/git-work/"
 alias python=python3
 alias vi="nvim -O"
+alias tf="terraform"
+alias claude-tmp="cd /tmp && claude-docker --yolo"
+
+#k8s
+alias kdp="kubectl describe pod"
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+
+# CDK
+function cdk-app {
+    if [ -z "$1" ]
+    then
+        echo "Please provide a CDK app that is in in (src/apps)"
+    else
+        cdk --app "python -m src.apps.$1" ${@:2}
+    fi
+}
+
+# Git
 function gcd {
     if [ -z "$1" ]
     then
         echo "Please provide a git URL"
     else
-	git clone $1 
+	    git clone $1 
         cd $(basename $(echo $1 | sed 's/\.git//'))
     fi
 }
@@ -77,3 +100,42 @@ function aws-session-remote {
         fi
     fi
 }
+
+function aws-get-ec2-instances { 
+    aws ec2 describe-instances | jq -r '.Reservations[].Instances[] | [.InstanceId, (.Tags[]//[]|select(.Key=="Env")|.Value), (.Tags[]//[]|select(.Key=="Name")|.Value), (.PrivateDnsName), (.State.Name) ]|@tsv'
+}
+
+function aws-assume-role {
+    if [ -z "$1" ]
+    then
+        echo "Please provide an role ARN"
+    else
+        eval $(aws sts assume-role --role-arn $1 --role-session-name assumed_by_zfunc | jq -r '"export AWS_ACCESS_KEY_ID=\"" + .Credentials.AccessKeyId + "\"\nexport AWS_SECRET_ACCESS_KEY=\"" + .Credentials.SecretAccessKey + "\"\nexport AWS_SESSION_TOKEN=\"" + .Credentials.SessionToken + "\""') 
+    fi
+}
+
+
+# eval "$(pyenv init --path)"
+
+# Hubble helper functions
+function node-of-pod {
+    kubectl -n $1 get pods $2 -o json | jq '.spec.nodeName'
+}
+
+function hubble-pod {
+    kubectl -n kube-system get pods -l k8s-app=cilium -o json | \
+    jq -r ".items[] | select(.spec.nodeName==$(node-of-pod $1 $2)) | .metadata.name"
+}
+
+# CDK
+export JSII_SILENCE_WARNING_UNTESTED_NODE_VERSION=1
+
+# Node.js NVM
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+
+# prevent Shai-Hulud from taking over my terminal
+alias npm="echo 'npm is disabled because it is bad'"
+
+# Claude-docker
+# export CLAUDE_DOCKER_TMUX=cc
