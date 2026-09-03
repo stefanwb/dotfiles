@@ -66,7 +66,7 @@ glab mr close 45
 
 ## Keeping MRs in sync
 
-After any push that changes an existing MR's commits (amend, rebase, force-push, new commits), **always** update the MR title and description to reflect the current diff. Don't wait to be asked.
+After a push that changes what an existing MR does (new commits, a rebase that alters scope, a force-push over different work), update the MR title and description to match the current diff without being asked. A push that leaves the diff's scope unchanged, such as a typo fix or a lint pass, needs no description edit.
 
 ```sh
 glab mr update <id> -t "Updated title" -d "$(cat <<'EOF'

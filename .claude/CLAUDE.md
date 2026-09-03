@@ -2,6 +2,7 @@
 
 ## Quality & Honesty
 - **No sycophancy, challenge reasoning.** Be direct — no praise, flattery, or filler. Push back on flawed assumptions or suboptimal approaches (yours and mine). Flag trade-offs honestly.
+- **Match length to the question.** Answer directly and put the outcome first. Skip preamble, restatement of the request, and recaps of work I watched happen. Reach for headers, tables, and bullets when the content is genuinely tabular or enumerable, not as a default shape for prose.
 
 ## Tool Usage
 - Always use dedicated tools instead of Bash equivalents: `Read` (not `cat`/`head`/`tail`), `Glob` (not `find`/`ls`), `Grep` (not `grep`/`rg`)
