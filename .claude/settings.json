@@ -44,5 +44,31 @@
   },
   "autoUpdatesChannel": "latest",
   "voiceEnabled": true,
-  "effortLevel": "high"
+  "effortLevel": "high",
+  "sandbox": {
+    "enabled": false,
+    "failIfUnavailable": true,
+    "autoAllowBashIfSandboxed": true,
+    "allowUnsandboxedCommands": false,
+    "filesystem": {
+      "denyRead": [
+        "~/.aws/credentials",
+        "~/.ssh/id_*",
+        ".env"
+      ]
+    },
+    "network": {
+      "allowedDomains": [
+        "github.com",
+        "*.npmjs.org"
+      ]
+    }
+  },
+  "permissions": {
+    "deny": [
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(~/.aws/credentials)"
+    ]
+  }
 }
