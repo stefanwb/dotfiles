@@ -20,7 +20,7 @@ The final document MUST be written in **Dutch**. Skill scaffolding (your convers
 
 - A garagebox is een **registergoed**; eigendomsoverdracht vereist een notariële akte gevolgd door inschrijving in de openbare registers (art. 3:89 BW). De koopovereenkomst is dus de obligatoire overeenkomst, niet de levering zelf.
 - **Geen wettelijke bedenktijd** voor een solitaire garagebox. Art. 7:2 BW (3 dagen bedenktijd, schriftelijkheidsvereiste) geldt alleen voor de koop van een **woning** door een consument. Een garagebox is geen woning, tenzij hij gelijktijdig met een woning als aanhorigheid wordt verkregen — dat valt buiten deze skill.
-- **Overdrachtsbelasting**: standaardtarief **10,4%** voor een garagebox als niet-woning (Wet op belastingen van rechtsverkeer). Het verlaagde 2%-tarief geldt alleen als de garagebox als aanhorigheid bij een woning op dezelfde dag wordt verkregen. Het per 1 januari 2026 ingevoerde 8%-middentarief geldt voor woningen die geen hoofdverblijf worden — niet voor garageboxen. **Bevestig dit bij de notaris** als de transactie afwijkt.
+- **Overdrachtsbelasting** *(tarieven geverifieerd op 2026-09-10 — hercontroleer bij elk Belastingplan)*: standaardtarief **10,4%** voor een garagebox als niet-woning (Wet op belastingen van rechtsverkeer). Het verlaagde 2%-tarief geldt alleen als de garagebox als aanhorigheid bij een woning op dezelfde dag wordt verkregen. Het per 1 januari 2026 ingevoerde 8%-middentarief geldt voor woningen die geen hoofdverblijf worden — niet voor garageboxen. **Bevestig dit bij de notaris** als de transactie afwijkt.
 - **Appartementsrecht** (Boek 5 titel 9 BW): koper wordt van rechtswege lid van de VvE; splitsingsakte en splitsingsreglement zijn dwingend, vaak met **toestemmingsclausules** of beperkingen op overdracht aan niet-VvE-leden — altijd in de splitsingsakte controleren.
 - **Wwft**: notaris voert verplicht cliëntenonderzoek (identificatie, herkomst middelen) uit; daar hoef je in het contract zelf niet over te schrijven, maar verzamel wel de gegevens voor de handoff.
 
@@ -218,7 +218,7 @@ Sluit af met een **invul-cheatsheet** (`---` separator) waarin elke `[ NOG IN TE
 
 ## Notary handoff package
 
-Schrijf een tweede bestand `Notaris-handoff-<YYYY-MM-DD>.md` met:
+Schrijf het tweede bestand uit stap 5/6 (`Notaris-handoff-<verkoper-initialen>-<koper-initialen>-<YYYY-MM-DD>.md`, met dezelfde collision-avoidance en `chmod 600`) met:
 
 1. **Korte begeleidende e-mail-tekst** voor partijen om naar de notaris te sturen.
 2. **Documentenlijst** die de notaris nodig heeft. **Belangrijke regel: noem deze documenten alleen bij naam in het handoff-bestand. Transcribeer nooit de inhoud van een van deze documenten in het markdown-bestand — niet samenvatten, niet bedragen overtypen, niet citeren, geen scans bijvoegen of paden naar scans noteren. De gebruiker levert de originele PDF's/scans rechtstreeks aan de notaris via diens beveiligde portal of in persoon.**

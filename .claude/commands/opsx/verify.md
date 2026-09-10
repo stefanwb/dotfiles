@@ -19,8 +19,6 @@ Verify that an implementation matches the change artifacts (specs, tasks, design
    Include the schema used for each change if available.
    Mark changes with incomplete tasks as "(In Progress)".
 
-   **IMPORTANT**: Do NOT guess or auto-select a change. Always let the user choose.
-
 2. **Check status to understand the schema**
    ```bash
    openspec status --change "<name>" --json

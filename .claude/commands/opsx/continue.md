@@ -23,8 +23,6 @@ Continue working on a change by creating the next artifact.
 
    Mark the most recently modified change as "(Recommended)" since it's likely what the user wants to continue.
 
-   **IMPORTANT**: Do NOT guess or auto-select a change. Always let the user choose.
-
 2. **Check current status**
    ```bash
    openspec status --change "<name>" --json
