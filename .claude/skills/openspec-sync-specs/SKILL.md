@@ -23,8 +23,6 @@ This is an **agent-driven** operation - you will read delta specs and directly e
 
    Show changes that have delta specs (under `specs/` directory).
 
-   **IMPORTANT**: Do NOT guess or auto-select a change. Always let the user choose.
-
 2. **Find delta specs**
 
    Look for delta spec files in `openspec/changes/<name>/specs/*/spec.md`.
