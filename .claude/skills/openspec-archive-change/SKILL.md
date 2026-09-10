@@ -22,8 +22,6 @@ Archive a completed change in the experimental workflow.
    Show only active changes (not already archived).
    Include the schema used for each change if available.
 
-   **IMPORTANT**: Do NOT guess or auto-select a change. Always let the user choose.
-
 2. **Check artifact completion status**
 
    Run `openspec status --change "<name>" --json` to check artifact completion.
