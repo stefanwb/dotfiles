@@ -24,6 +24,8 @@
 - After completing a functional change (feature, fix, refactor), create a commit with a meaningful message before moving on.
 - Stage specific files — never `git add -A` or `git add .`.
 - Do not commit after research, questions, or partial/in-progress work.
+- **Work in a git worktree for any change to tracked files.** Before the first edit, call `EnterWorktree` (named after the task) so the work is isolated on its own branch. Skip it for read-only work, research, and questions. If I've already put you on a task branch or in a worktree, stay there.
+- Do not call `ExitWorktree` on your own — leave it in place for review; keep vs. remove is my call.
 
 ## Node.js
 - Always use `pnpm`, never `npm`
