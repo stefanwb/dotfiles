@@ -15,6 +15,11 @@
       "Bash(glab label list:*)",
       "Bash(glab ci status:*)",
       "Bash(glab ci trace:*)"
+    ],
+    "deny": [
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(~/.aws/credentials)"
     ]
   },
   "model": "opus[1m]",
@@ -63,12 +68,5 @@
         "*.npmjs.org"
       ]
     }
-  },
-  "permissions": {
-    "deny": [
-      "Read(.env)",
-      "Read(.env.*)",
-      "Read(~/.aws/credentials)"
-    ]
   }
 }
