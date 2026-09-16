@@ -44,6 +44,12 @@
         "hooks": [
           { "type": "command", "command": "~/.claude/hooks/protect-files.sh" }
         ]
+      },
+      {
+        "matcher": "Agent|Workflow",
+        "hooks": [
+          { "type": "command", "command": "~/.claude/hooks/limit-agent-spawns.sh" }
+        ]
       }
     ]
   },

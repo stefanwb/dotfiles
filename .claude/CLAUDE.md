@@ -38,3 +38,8 @@
 - **`grm`**: Rebases current branch on the default branch.
 - **`grc`**: Rebases current branch on its remote tracking branch.
 - **`gh`**: GitHub CLI.
+
+## Reviews and Delegation
+- PR/MR reviews run on Claude Fable 5.1 at low effort. Delegate to the `tech-lead` agent (pinned to `model: fable`, `effort: low`). Only use `/code-review low` when the session model is already Fable, and always type the level. One reviewer, no fan-out across files or dimensions.
+- Never spawn more than 2 agents (Agent calls, team teammates, Workflow runs) in a session without my explicit approval. Ask first, listing what each agent would do. Workflow runs always need approval.
+- Delegating a review to `tech-lead` counts as one of the 2.

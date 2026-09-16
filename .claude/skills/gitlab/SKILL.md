@@ -64,6 +64,60 @@ glab mr note 45 -m "Closing — superseded by direct commits on main."
 glab mr close 45
 ```
 
+## Reviewing an MR
+
+**Model and effort.** MR reviews run on Claude Fable 5.1 at **low** effort. Delegate the review to the `tech-lead` agent; its definition pins `model: fable` and `effort: low`, so it is the default path. `/code-review low` is an alternative only when the session model is already Fable, because `/code-review` runs on the session model. Always type the level: a bare `/code-review` reuses whatever level was typed last, not `low`. Do not review at the session's default (higher) effort and do not switch to another model.
+
+**One reviewer, no fan-out.** A review is a single agent's job. Do not spawn extra agents to split a review by file, dimension, or verification pass. If a change needs a specialist pass (security, cost), name it in the review and let the user decide. This is part of the delegation policy: never more than 2 agents per session without explicit approval (see the `claude-shared` README).
+
+### Step 1 — Read the change
+
+```sh
+glab mr view <id>                # title, description, state
+glab mr view <id> -F json        # full MR object as JSON (filter with --jq)
+glab mr diff <id>                # full diff
+```
+
+### Step 2 — Fetch the diff refs (needed for inline comments)
+
+Fetch these immediately before posting. A push to the source branch changes `head_commit_sha` and stale refs are rejected.
+
+```sh
+glab api projects/:id/merge_requests/<id>/versions --jq '.[0] | {base_commit_sha, head_commit_sha, start_commit_sha}'
+```
+
+`:id` is resolved by `glab` to the current project, so this works from inside the repo checkout.
+
+### Step 3 — Post the review
+
+Post one summary note plus one inline thread per finding. Post everything in one pass; the author may start fixing the first batch before a second one lands.
+
+```sh
+# Summary note (verdict + anything that cannot be anchored to a diff line)
+glab mr note <id> -m "$(cat <<'EOF'
+Overall review notes.
+EOF
+)"
+
+# Inline thread on a line in the diff
+glab api projects/:id/merge_requests/<id>/discussions -X POST   -f body="Comment text"   -f 'position[position_type]=text'   -f 'position[base_sha]=<base_commit_sha>'   -f 'position[head_sha]=<head_commit_sha>'   -f 'position[start_sha]=<start_commit_sha>'   -f 'position[new_path]=src/foo.py'   -f 'position[old_path]=src/foo.py'   -f 'position[new_line]=42'
+```
+
+Line targeting rules:
+
+- `new_line` is the right-side line number for added or unchanged lines. For a removed line, pass `old_line` instead and omit `new_line`.
+- The line **must be inside a diff hunk** (check `glab mr diff <id>` for the `@@` headers). Findings on untouched lines go in the summary note, not an inline thread.
+- `-f` sends the value as a raw string, which is what the discussions API expects for `position[...]` fields.
+
+### Step 4 — Verdict (only when asked)
+
+Approve or revoke only when the user explicitly asks for a verdict; a review with findings ends at the notes.
+
+```sh
+glab mr approve <id>
+glab mr revoke <id>
+```
+
 ## Keeping MRs in sync
 
 After a push that changes what an existing MR does (new commits, a rebase that alters scope, a force-push over different work), update the MR title and description to match the current diff without being asked. A push that leaves the diff's scope unchanged, such as a typo fix or a lint pass, needs no description edit.
