@@ -28,6 +28,7 @@
 - Do not commit after research, questions, or partial/in-progress work.
 - **Work in a git worktree for any change to tracked files.** Before the first edit, call `EnterWorktree` (named after the task) so the work is isolated on its own branch. Skip it for read-only work, research, and questions. If I've already put you on a task branch or in a worktree, stay there.
 - Do not call `ExitWorktree` on your own — leave it in place for review; keep vs. remove is my call.
+- **Before asking me to review a PR/MR, refresh its title and description to match the current diff.** This applies to every hand-off, not just the first — after rework, re-read the diff and update the title/body before prompting me. See the `github` / `gitlab` skills.
 
 ## Node.js
 - Always use `pnpm`, never `npm`
