@@ -19,7 +19,7 @@
 ## GitLab
 - Always use `glab` as the CLI tool for GitLab (NOT `lab` or `gh`)
 - `sbp.gitlab.schubergphilis.com` requires Cisco Secure Client VPN
-- **Before any GitLab operation** (CI, MR, pipelines), load the `/gitlab` skill first to inform your decisions — don't rely on assumptions about `glab` syntax or available commands
+- **Before any GitLab operation** (CI, MR, pipelines), load the `/claude-shared:gitlab` skill first to inform your decisions — don't rely on assumptions about `glab` syntax or available commands
 
 ## Git
 - Always push to a non-default branch unless explicitly told otherwise. Never push directly to main/master.
@@ -28,7 +28,7 @@
 - Do not commit after research, questions, or partial/in-progress work.
 - **Work in a git worktree for any change to tracked files.** Before the first edit, call `EnterWorktree` (named after the task) so the work is isolated on its own branch. Skip it for read-only work, research, and questions. If I've already put you on a task branch or in a worktree, stay there.
 - Do not call `ExitWorktree` on your own — leave it in place for review; keep vs. remove is my call.
-- **Before asking me to review a PR/MR, refresh its title and description to match the current diff.** This applies to every hand-off, not just the first — after rework, re-read the diff and update the title/body before prompting me. See the `github` / `gitlab` skills.
+- **Before asking me to review a PR/MR, refresh its title and description to match the current diff.** This applies to every hand-off, not just the first — after rework, re-read the diff and update the title/body before prompting me. See the `claude-shared:github` / `claude-shared:gitlab` skills.
 
 ## Node.js
 - Always use `pnpm`, never `npm`
@@ -42,6 +42,6 @@
 - **`gh`**: GitHub CLI.
 
 ## Reviews and Delegation
-- PR/MR reviews run on Opus at low effort. Delegate to the `tech-lead` agent (pinned to `model: opus`, `effort: low`). Only use `/code-review low` when the session model is already Opus, and always type the level. One reviewer, no fan-out across files or dimensions.
+- PR/MR reviews run on Opus at low effort. Delegate to the `claude-shared:tech-lead` agent (pinned to `model: opus`, `effort: low`). Only use `/code-review low` when the session model is already Opus, and always type the level. One reviewer, no fan-out across files or dimensions.
 - Never spawn more than 2 agents (Agent calls, team teammates, Workflow runs) in a session without my explicit approval. Ask first, listing what each agent would do. Workflow runs always need approval.
-- Delegating a review to `tech-lead` counts as one of the 2.
+- Delegating a review to `claude-shared:tech-lead` counts as one of the 2.
