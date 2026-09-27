@@ -59,4 +59,10 @@ if [ -n "$model" ]; then
   output="$output $(printf '\033[36m[%s]\033[0m' "$model_part")"
 fi
 
+# Session cost, from Claude Code's own input
+cost=$(echo "$input" | jq -r '.cost.total_cost_usd // empty')
+if [ -n "$cost" ]; then
+  output="$output $(printf '\033[35m$%.2f\033[0m' "$cost")"
+fi
+
 printf '%s' "$output"
