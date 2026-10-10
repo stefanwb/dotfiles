@@ -1,4 +1,4 @@
-"G Path to python3 bin
+" Path to python3 bin
 let g:python3_host_prog = '/usr/bin/python3'
 
 " Plugins - install vim-plug then load them
@@ -181,7 +181,6 @@ map <F12> <C-w>\|
 
 
 " OpenAI - Github Copilot
-" let g:chat_gpt_key='sk-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
 " let g:chat_gpt_max_tokens=2000
 
 colorscheme slate
