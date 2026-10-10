@@ -6,9 +6,7 @@ export GIT_EDITOR=nvim
 export TFENV_ARCH=amd64
 #export PYTHON_CONFIGURE_OPTS="--enable-framework"
 
-alias grc='export BRANCH=$(git branch --show-current) && git fetch origin $BRANCH && git rebase origin/$BRANCH'
-alias grm='export BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed "s@^refs/remotes/origin/@@") &&  git fetch origin ${BRANCH} && git rebase origin/${BRANCH}'
-alias gcm='export BRANCH=$(git remote show origin | grep "HEAD branch" | cut -d" " -f5) && git checkout ${BRANCH} && git pull origin ${BRANCH}'
+# grc, grm, gcm and gcd live in .oh-my-zsh/custom/git.zsh (must load after oh-my-zsh)
 alias gw="cd ~/git-work/"
 alias python=python3
 alias vi="nvim -O"
@@ -30,17 +28,6 @@ function cdk-app {
         echo "Please provide a CDK app that is in in (src/apps)"
     else
         cdk --app "python -m src.apps.$1" ${@:2}
-    fi
-}
-
-# Git
-function gcd {
-    if [ -z "$1" ]
-    then
-        echo "Please provide a git URL"
-    else
-	    git clone $1 
-        cd $(basename $(echo $1 | sed 's/\.git//'))
     fi
 }
 
