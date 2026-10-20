@@ -1,7 +1,5 @@
-# Git helpers. Lives in $ZSH_CUSTOM so it loads after oh-my-zsh's git plugin,
-# which otherwise overwrites gcm, grm and gcd. Defining these in .zprofile does
-# not work: it runs before .zshrc sources oh-my-zsh.
-unalias gcm grm gcd 2>/dev/null
+# Git helpers, sourced by .zshrc after Zim. Zim's git module prefixes its
+# aliases with `G`, so these names don't collide.
 
 alias grc='export BRANCH=$(git branch --show-current) && git fetch origin $BRANCH && git rebase origin/$BRANCH'
 alias grm='export BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed "s@^refs/remotes/origin/@@") &&  git fetch origin ${BRANCH} && git rebase origin/${BRANCH}'
