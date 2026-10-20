@@ -1,0 +1,115 @@
+# Starship prompt, modelled on the Powerlevel10k "classic" wizard config this
+# replaced: one line, dark segments with angled separators, directory and git on
+# the left, status, duration, context and time on the right.
+# Colours are the same 256-colour codes p10k used. Needs a Nerd Font (MesloLGS NF).
+# Glyphs are written as \u escapes (double-quoted strings) so editors can't drop them:
+# / segment ends, / thin separators.
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = false
+
+format = """\
+$directory\
+$git_branch\
+$git_state\
+$git_status\
+[](fg:236) """
+
+# Every right-side module ends with a thin separator; time is always shown and
+# comes last, so the prompt never ends on a dangling separator.
+right_format = """\
+[](fg:236)\
+$status\
+$cmd_duration\
+$jobs\
+$direnv\
+$python\
+$nodejs\
+$golang\
+$aws\
+$time"""
+
+[directory]
+format = '[ $path ]($style)[$read_only]($read_only_style)'
+style = 'fg:31 bg:236'
+repo_root_format = '[ $before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path ]($style)[$read_only]($read_only_style)'
+before_repo_root_style = 'fg:31 bg:236'
+repo_root_style = 'bold fg:39 bg:236'
+read_only = " "
+read_only_style = 'fg:178 bg:236'
+truncation_length = 4
+truncation_symbol = '…/'
+
+[git_branch]
+format = "[](fg:244 bg:236)[ $symbol$branch ]($style)"
+symbol = " "
+style = 'fg:76 bg:236'
+
+[git_state]
+format = '[$state( $progress_current/$progress_total) ]($style)'
+style = 'fg:196 bg:236'
+
+[git_status]
+format = '([$all_status$ahead_behind]($style))'
+style = 'fg:178 bg:236'
+conflicted = '~${count} '
+ahead = '⇡${count} '
+behind = '⇣${count} '
+diverged = '⇣${behind_count}⇡${ahead_count} '
+untracked = '?${count} '
+stashed = '*${count} '
+modified = '!${count} '
+staged = '+${count} '
+renamed = '+${count} '
+deleted = '!${count} '
+
+[status]
+disabled = false
+format = "[ $symbol ]($style)[](fg:244 bg:236)"
+success_symbol = '[✔](fg:70 bg:236)'
+symbol = '[✘ $status](fg:160 bg:236)'
+style = 'bg:236'
+
+[cmd_duration]
+min_time = 3_000
+format = "[ $duration ]($style)[](fg:244 bg:236)"
+style = 'fg:248 bg:236'
+
+[jobs]
+format = "[ $symbol$number ]($style)[](fg:244 bg:236)"
+symbol = " "
+style = 'fg:37 bg:236'
+
+[direnv]
+disabled = false
+format = "[ $symbol$loaded ]($style)[](fg:244 bg:236)"
+symbol = 'direnv '
+style = 'fg:178 bg:236'
+
+[python]
+format = "[ $symbol$version( \\($virtualenv\\)) ]($style)[](fg:244 bg:236)"
+symbol = " "
+style = 'fg:37 bg:236'
+
+[nodejs]
+format = "[ $symbol$version ]($style)[](fg:244 bg:236)"
+symbol = " "
+style = 'fg:70 bg:236'
+
+[golang]
+format = "[ $symbol$version ]($style)[](fg:244 bg:236)"
+symbol = " "
+style = 'fg:37 bg:236'
+
+# p10k showed AWS only while typing aws/terraform/cdk commands; Starship can't,
+# so it shows whenever AWS_PROFILE is set (e.g. after aws-sso-login).
+[aws]
+format = "[ $symbol$profile( \\($region\\)) ]($style)[](fg:244 bg:236)"
+symbol = " "
+style = 'fg:208 bg:236'
+
+[time]
+disabled = false
+format = '[ $time ]($style)'
+time_format = '%H:%M:%S'
+style = 'fg:66 bg:236'
