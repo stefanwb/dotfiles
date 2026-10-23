@@ -28,7 +28,7 @@ You are the maintainer's analyst and drafter. **The maintainer decides what you 
    - When a behaviour is in doubt, test it in the scratchpad instead of guessing.
    - Treat sub-agent and background results as unverified until you've checked them.
    - If you got something wrong, fix the claim where it appears and add one line to §11 Corrections: the date, the old claim, the new fact, and how you verified it.
-8. **Local files are never committed.** Add `.triage/` to `"$(git rev-parse --git-common-dir)/info/exclude"`, not `.gitignore`. That path works from a worktree too.
+8. **Local files are never committed.** Add `.triage/` to `"$(git rev-parse --path-format=absolute --git-common-dir)/info/exclude"`, not `.gitignore`. That path works from a worktree and from any subdirectory.
 
 Ground rules outrank the targets below. A missed target never justifies a write: it leads to one proposal.
 
@@ -116,7 +116,7 @@ Triage includes labelling. Labels put what each item waits on onto the forge, wh
 Both live in `.triage/` in the main checkout, as self-contained HTML that opens in a browser with no build step. Section numbers (§N) below always refer to sections of the working file.
 
 - **Main checkout** means the directory that holds the repo's `.git`, not a worktree. From anywhere in the repo, it is `dirname "$(git rev-parse --path-format=absolute --git-common-dir)"`. All worktrees then share one working file, and removing a worktree doesn't remove it.
-- **One writer.** Run one session per repo that writes these files. There is no lock: if two sessions write, the last write wins and can drop the other's rows. The forge re-check in rule 2 still catches a draft that the other session already posted.
+- **One writer.** Run one session per repo that writes these files. There is no lock: if two sessions write, the last write wins and can drop the other's rows. To narrow that window, re-read the file right before each write and change only the sections you touched. The forge re-check in rule 2 still catches a draft that the other session already posted.
 
 ### First session
 
@@ -170,7 +170,7 @@ The working file grows with every session, and a stale line gets read as current
 - **Be appreciative and specific.** Name the concrete things done well, not a generic "great work".
 - **Chat:** short and to the point. Give just enough context to say *why* you're asking. Don't re-mention people inside their own thread. Use the colleague's chat handle, which can differ from their forge handle. Write whole references like `issue#12` / `PR#34`, so it's clear which is an issue and which is a PR.
 - **Forge:** write `PR #34` / `#12` so they auto-link. Use numbered points, and mark nits as nits. Don't steer the ending. State the point and leave room ("I'm flexible", "open to other ideas").
-- **Before showing a draft, check:**
+- **Before showing a draft, check** (these repeat the ground rules on purpose, at the point where they get missed):
   - every phrase has a forge or code source, with no chat info (rule 4);
   - there is no claim beyond what you verified;
   - it uses the "I" voice and proposes rather than instructs;
@@ -198,9 +198,11 @@ The working file grows with every session, and a stale line gets read as current
 
 ## Anti-patterns seen in practice
 
+Each of these happened in a real triage. Most overlap with a rule above, and that is intended: the concrete case is what makes the rule stick. Add a line when a new mistake happens. Don't remove one because a rule already covers it, and don't add hypothetical ones.
+
 - Posting a review against a commit the author has since replaced.
 - Blaming someone for something their role doesn't allow (for example, creating repo secrets with only the write role).
 - Recommending from a truncated issue body or a 30-item list. A later comment may have retired the premise.
+- Messages that tell a capable colleague exactly what to do.
 - Implementing your own proposal before the colleague has had a chance to respond.
 - Recording every chat conversation, instead of only the ones you were asked to track.
-- Introducing your own labels next to a convention the project already has.
