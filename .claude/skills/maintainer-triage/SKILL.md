@@ -46,7 +46,7 @@ The targets below measure that goal; they don't replace it. A target met with a 
      - GitHub: for a PR that went from draft to ready, take the time of the latest `READY_FOR_REVIEW_EVENT` from `gh api graphql` `timelineItems(itemTypes: READY_FOR_REVIEW_EVENT)`; a PR moved back to draft restarts the clock. For a PR that was never a draft, use `createdAt`. `gh pr list` has no timeline field.
      - GitLab: `glab mr list` returns no reviews. Use `glab api` on the MR's notes (the "marked as ready" system note, and the first non-system note by someone other than the author) and its approvals.
    - Working days are Mon to Fri. Count whole working days since the clock started: ready on Friday evening and checked on Monday morning is 0.
-   - A first review is a submitted review or review comment by a human other than the author. Bot reviews don't count: a bot is a login ending in `[bot]`, or an account recorded as a bot in §2.
+   - A first review is a submitted review or review comment from a person's account other than the author's, whoever drafted it. Bot accounts don't count. `gh pr list` drops the `[bot]` suffix and has no account type, so for each PR the list shows as reviewed, check the reviewers with `gh api repos/{owner}/{repo}/pulls/<n>/reviews --jq '.[] | {login: .user.login, type: .user.type, submitted_at}'`. A `Bot` type is a bot. Also count accounts recorded as bots in §2: machine users with a `User` type, and bot accounts on GitLab.
    - Any team member's review counts. You flag the delay; you don't have to write the review.
    - Stacked PRs: the clock for a PR higher in the stack starts when the PR below it has had its first review.
 2. **Every open issue and decision says what it waits on, not who owns it.**
