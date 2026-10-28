@@ -42,6 +42,6 @@
 - **`gh`**: GitHub CLI.
 
 ## Reviews and Delegation
-- PR/MR reviews run on Opus at low effort. Delegate to the `claude-shared:tech-lead` agent (pinned to `model: opus`, `effort: low`). Only use `/code-review low` when the session model is already Opus, and always type the level. One reviewer, no fan-out across files or dimensions.
+- PR/MR reviews run on Opus at medium effort. Delegate to the `claude-shared:tech-lead` agent (pinned to `model: opus`, `effort: medium`). Only use `/code-review medium` when the session model is already Opus, and always type the level. One reviewer, no fan-out across files or dimensions.
 - Never spawn more than 2 agents (Agent calls, team teammates, Workflow runs) in a session without my explicit approval. Ask first, listing what each agent would do. Workflow runs always need approval.
 - Delegating a review to `claude-shared:tech-lead` counts as one of the 2.
