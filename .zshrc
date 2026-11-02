@@ -107,19 +107,17 @@ if (($+commands[starship])); then
   eval "$(starship init zsh)"
 
   # Transient prompt (p10k had it, Starship has none for zsh): once a command is
-  # accepted, redraw its prompt as "> " so scrollback shows just the commands.
-  # precmd puts the full prompt back for the next line.
-  typeset -g _starship_prompt=$PROMPT _starship_rprompt=$RPROMPT
+  # accepted, redraw its prompt as "❯ " so scrollback shows just the commands.
+  # The prompt is put back right after the redraw (zle doesn't expand it again
+  # before the command runs), so anything else that changes PROMPT is kept.
   _transient_prompt_collapse() {
     [[ $CONTEXT == start ]] || return 0
-    PROMPT='> ' RPROMPT=''
+    local saved_prompt=$PROMPT saved_rprompt=$RPROMPT
+    PROMPT='❯ ' RPROMPT=''
     zle reset-prompt
-  }
-  _transient_prompt_restore() {
-    PROMPT=$_starship_prompt RPROMPT=$_starship_rprompt
+    PROMPT=$saved_prompt RPROMPT=$saved_rprompt
   }
   # Hook rather than define zle-line-finish, so Zim's input module keeps its own.
   autoload -Uz add-zle-hook-widget
   add-zle-hook-widget line-finish _transient_prompt_collapse
-  precmd_functions+=(_transient_prompt_restore)
 fi
